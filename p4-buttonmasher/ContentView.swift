@@ -12,6 +12,8 @@ struct ContentView: View {
     @State var alertIsVisible = false
     @State var sliderValue = 50.0
     @State var target = Int.random(in: 1...100)
+    @State var score = 0
+    
     var body: some View {
         VStack {
             Spacer()
@@ -31,17 +33,21 @@ struct ContentView: View {
             Spacer()
             // button row
             Button(action: {
-                print("buton pressed!")
+                print("buton pressed!, \(score)" )
                 self.alertIsVisible = true
+        
             }) {
                 Text("Hit Me!")
             }
             .alert(isPresented: $alertIsVisible) { () -> Alert in
-                let roundedValue = Int(sliderValue.rounded())
+//                let roundedValue = Int(sliderValue.rounded())
                 return Alert (title: Text("hello there!"), message: Text(
-                    "The slider's value is \(roundedValue).\n" +
+                    "The slider's value is \(sliderValueRounded()).\n" +
                     "You scored \(pointsForCurrentRound()) points this round."
-                ), dismissButton: .default(Text("Awesome!")))
+                ), dismissButton: .default(Text("Awesome!")) {
+                    self.score = self.score + self.pointsForCurrentRound()
+                    self.target = Int.random(in: 1...100)
+                })
             }
             Spacer()
             // Score row
@@ -51,7 +57,7 @@ struct ContentView: View {
                 }
                 Spacer()
                 Text("Score:")
-                Text("999999")
+                Text("\(score)")
                 Spacer()
                 Text("Round:")
                 Text("999")
@@ -60,16 +66,16 @@ struct ContentView: View {
                     Text("Info")
                 }
             }
-            
-            
             .padding(.bottom, 10)
         }
     }
+
+    func sliderValueRounded() -> Int {
+        Int(sliderValue.rounded())
+    }
+    
     func pointsForCurrentRound() -> Int {
-        let roundedValue = Int(sliderValue.rounded())
-        let difference = abs(target - roundedValue)
-        let awardedPoints = 100 - difference
-        return awardedPoints
+        100 - abs(target - sliderValueRounded())
     }
 }
 
