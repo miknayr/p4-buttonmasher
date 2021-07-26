@@ -56,7 +56,9 @@ struct ContentView: View {
                     Text("Info")
                 }
             }
-            .padding(.bottom, 20)
+            
+            
+            .padding(.bottom, 10)
         }
     }
 }
