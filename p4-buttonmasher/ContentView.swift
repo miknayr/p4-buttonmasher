@@ -14,15 +14,22 @@ struct ContentView: View {
     @State var target = Int.random(in: 1...100)
     @State var score = 0
     @State var round = 1
+    @State var invis = true
     
     var body: some View {
+    
         VStack {
+      
             Spacer()
             // Target row
             HStack {
                 Text("Put the bullseye as close as you can to:")
                 Text("\(target)")
                 
+            }
+            Spacer()
+            if invis == false {
+                Text("this is the slider value \(sliderValue)")
             }
             Spacer()
             // Slider Row
@@ -49,15 +56,17 @@ struct ContentView: View {
                     self.score = self.score + self.pointsForCurrentRound()
                     self.target = Int.random(in: 1...100)
                     self.round += 1
+                    self.sliderValue = 50.0
                 })
             }
             Spacer()
             // Score row
             HStack {
+                
+                
                 Button(action: {
-                    score = 0
-                    target = Int.random(in: 1...100)
-                    round = 1
+
+                    startNewGame()
                 }) {
                     Text("Start Over")
                 }
@@ -71,9 +80,13 @@ struct ContentView: View {
                 Button(action:{}) {
                     Text("Info")
                 }
+             
+               
             }
-            .padding(.bottom, 10)
+            .padding(.bottom, 30)
+            .padding(.horizontal, 20)
         }
+        .padding(.horizontal, 20)
     }
 
     func sliderValueRounded() -> Int {
@@ -110,11 +123,17 @@ struct ContentView: View {
         }
         return title
     }
+    func startNewGame() {
+        score = 0
+        round = 1
+        sliderValue = 50.0
+        target = Int.random(in: 1...100)
+    }
 }
 
 struct ContentView_Previews:
     PreviewProvider {
     static var previews: some View {
-        ContentView().previewLayout(.fixed(width: 896, height: 414))
+        ContentView().previewLayout(.fixed(width: 414, height: 896))
     }
 }

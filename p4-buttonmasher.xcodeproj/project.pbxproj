@@ -11,6 +11,8 @@
 		D7555AC426ACB63F00B8B9FF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7555AC326ACB63F00B8B9FF /* ContentView.swift */; };
 		D7555AC626ACB64000B8B9FF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D7555AC526ACB64000B8B9FF /* Assets.xcassets */; };
 		D7555AC926ACB64000B8B9FF /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D7555AC826ACB64000B8B9FF /* Preview Assets.xcassets */; };
+		D77E357C26AF52A4007E2A77 /* notepad.rtf in Resources */ = {isa = PBXBuildFile; fileRef = D77E357B26AF52A4007E2A77 /* notepad.rtf */; };
+		D77E357E26AF5AB2007E2A77 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D77E357D26AF5AB2007E2A77 /* Storyboard.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +22,8 @@
 		D7555AC526ACB64000B8B9FF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D7555AC826ACB64000B8B9FF /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		D7555ACA26ACB64000B8B9FF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D77E357B26AF52A4007E2A77 /* notepad.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = notepad.rtf; sourceTree = "<group>"; };
+		D77E357D26AF5AB2007E2A77 /* Storyboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,11 +56,13 @@
 		D7555AC026ACB63F00B8B9FF /* p4-buttonmasher */ = {
 			isa = PBXGroup;
 			children = (
+				D77E357D26AF5AB2007E2A77 /* Storyboard.storyboard */,
 				D7555AC126ACB63F00B8B9FF /* p4_buttonmasherApp.swift */,
 				D7555AC326ACB63F00B8B9FF /* ContentView.swift */,
 				D7555AC526ACB64000B8B9FF /* Assets.xcassets */,
 				D7555ACA26ACB64000B8B9FF /* Info.plist */,
 				D7555AC726ACB64000B8B9FF /* Preview Content */,
+				D77E357B26AF52A4007E2A77 /* notepad.rtf */,
 			);
 			path = "p4-buttonmasher";
 			sourceTree = "<group>";
@@ -126,6 +132,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D77E357C26AF52A4007E2A77 /* notepad.rtf in Resources */,
+				D77E357E26AF5AB2007E2A77 /* Storyboard.storyboard in Resources */,
 				D7555AC926ACB64000B8B9FF /* Preview Assets.xcassets in Resources */,
 				D7555AC626ACB64000B8B9FF /* Assets.xcassets in Resources */,
 			);
