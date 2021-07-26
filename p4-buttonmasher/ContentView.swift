@@ -13,6 +13,7 @@ struct ContentView: View {
     @State var sliderValue = 50.0
     @State var target = Int.random(in: 1...100)
     @State var score = 0
+    @State var round = 1
     
     var body: some View {
         VStack {
@@ -41,18 +42,23 @@ struct ContentView: View {
             }
             .alert(isPresented: $alertIsVisible) { () -> Alert in
 //                let roundedValue = Int(sliderValue.rounded())
-                return Alert (title: Text("hello there!"), message: Text(
+                return Alert (title: Text(alertTitle()), message: Text(
                     "The slider's value is \(sliderValueRounded()).\n" +
                     "You scored \(pointsForCurrentRound()) points this round."
                 ), dismissButton: .default(Text("Awesome!")) {
                     self.score = self.score + self.pointsForCurrentRound()
                     self.target = Int.random(in: 1...100)
+                    self.round += 1
                 })
             }
             Spacer()
             // Score row
             HStack {
-                Button(action: {}) {
+                Button(action: {
+                    score = 0
+                    target = Int.random(in: 1...100)
+                    round = 1
+                }) {
                     Text("Start Over")
                 }
                 Spacer()
@@ -60,7 +66,7 @@ struct ContentView: View {
                 Text("\(score)")
                 Spacer()
                 Text("Round:")
-                Text("999")
+                Text("\(round)")
                 Spacer()
                 Button(action:{}) {
                     Text("Info")
@@ -74,8 +80,35 @@ struct ContentView: View {
         Int(sliderValue.rounded())
     }
     
+    func amountOff() -> Int {
+        abs(target - sliderValueRounded())
+    }
     func pointsForCurrentRound() -> Int {
-        100 - abs(target - sliderValueRounded())
+        let maximumScore = 100
+        let difference = amountOff()
+        let bonus: Int
+        if difference == 0 {
+            bonus = 100
+        } else if difference == 1 {
+            bonus = 50
+        } else {
+            bonus = 0
+        }
+        return maximumScore - difference + bonus
+    }
+    func alertTitle() -> String {
+        let difference = amountOff()
+        let title: String
+        if difference == 0 {
+            title = "Perfect!"
+        } else if difference < 5 {
+            title = "almost!"
+        } else if difference <= 10 {
+            title = "not bad"
+        } else {
+            title = "Not even close"
+        }
+        return title
     }
 }
 
