@@ -12,6 +12,7 @@ struct p4_buttonmasherApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+            
         }
     }
 }

@@ -13,19 +13,19 @@ struct ContentView: View {
     @State var sliderValue = 50.0
     @State var target = Int.random(in: 1...100)
     @State var score = 0
-    @State var round = 1
+    @State var round = 3
     @State var invis = true
     
     var body: some View {
     
         VStack {
-      
+
             Spacer()
             // Target row
             HStack {
                 Text("Put the bullseye as close as you can to:")
                 Text("\(target)")
-                
+
             }
             Spacer()
             if invis == false {
@@ -43,7 +43,7 @@ struct ContentView: View {
             Button(action: {
                 print("buton pressed!, \(score)" )
                 self.alertIsVisible = true
-        
+
             }) {
                 Text("Hit Me!")
             }
@@ -55,15 +55,19 @@ struct ContentView: View {
                 ), dismissButton: .default(Text("Awesome!")) {
                     self.score = self.score + self.pointsForCurrentRound()
                     self.target = Int.random(in: 1...100)
-                    self.round += 1
-                    self.sliderValue = 50.0
+                    self.round -= 1
+                    self.sliderValue = 50.00
+                    if round == 0 {
+                        startNewGame()
+                    }
+
                 })
             }
             Spacer()
             // Score row
             HStack {
-                
-                
+
+
                 Button(action: {
 
                     startNewGame()
@@ -77,11 +81,11 @@ struct ContentView: View {
                 Text("Round:")
                 Text("\(round)")
                 Spacer()
-                Button(action:{}) {
+                Button(action:{ }) { // create the view, push the view controller somehow.
                     Text("Info")
                 }
-             
-               
+
+
             }
             .padding(.bottom, 30)
             .padding(.horizontal, 20)
@@ -92,7 +96,7 @@ struct ContentView: View {
     func sliderValueRounded() -> Int {
         Int(sliderValue.rounded())
     }
-    
+
     func amountOff() -> Int {
         abs(target - sliderValueRounded())
     }
@@ -125,7 +129,7 @@ struct ContentView: View {
     }
     func startNewGame() {
         score = 0
-        round = 1
+        round = 3
         sliderValue = 50.0
         target = Int.random(in: 1...100)
     }
