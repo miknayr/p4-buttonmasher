@@ -7,28 +7,28 @@
 
 import SwiftUI
 
-enum SquareStatus {
-    case empty
-    case home
-    case visitor
-}
-
-class Square : ObservableObject {
-    @Published var squareStatus : SquareStatus
-    init(status : SquareStatus){
-        self.squareStatus = status
-    }
-}
-
-class TicTacToeModel: ObservableObject {
-    @Published var squares = [Square]()
-    init() {
-        for _ in 0...8 {
-            squares.append(Square(status: .empty))
-        }
-    }
-    
-}
+//enum SquareStatus {
+//    case empty
+//    case home
+//    case visitor
+//}
+//
+//class Square : ObservableObject {
+//    @Published var squareStatus : SquareStatus
+//    init(status : SquareStatus){
+//        self.squareStatus = status
+//    }
+//}
+//
+//class TicTacToeModel: ObservableObject {
+//    @Published var squares = [Square]()
+//    init() {
+//        for _ in 0...8 {
+//            squares.append(Square(status: .empty))
+//        }
+//    }
+//
+//}
 
 
 
@@ -42,7 +42,7 @@ struct ContentView: View {
     @State var invis = true
     @State var gameOne = true
     @State var gameTwo = false
-    @StateObject var ticTacToeModel = TicTacToeModel()
+//    @StateObject var ticTacToeModel = TicTacToeModel()
     
     struct LableStyle: ViewModifier {
         func body(content: Content) -> some View {
@@ -55,78 +55,78 @@ struct ContentView: View {
     var body: some View {
     
         VStack {
-//                if round != 0{
-//                    Spacer()
-//                    // Target row
-//                    HStack {
-//                        Text("Put the bullseye as close as you can to:").modifier(LableStyle())
-//
-//                        Text("\(target)")
-//
-//                    }
-//                    Spacer()
-//                    // the gap between bullseye and slider
-//                    if invis == false {
-//                        Text("this is the slider value \(sliderValue)")
-//                    }
-//                    Spacer()
-//                    // Slider Row
-//                    HStack{
-//                        Text("1").modifier(LableStyle())
-//
-//                        Slider(value: $sliderValue, in: 1...100)
-//                        Text("100").modifier(LableStyle())
-//
-//                    }
-//                    Spacer()
-//                    // button row
-//                    Button(action: {
-//                        print("buton pressed!, \(score)" )
-//                        self.alertIsVisible = true
-//
-//                    }) {
-//                        Text("Hit Me!").modifier(LableStyle())
-//
-//                    }
-//                    .alert(isPresented: $alertIsVisible) { () -> Alert in
-//
-//                        return Alert (title: Text(alertTitle()), message: Text(
-//                            "The slider's value is \(sliderValueRounded()).\n" +
-//                            "You scored \(pointsForCurrentRound()) points this round."
-//                        ), dismissButton: .default(Text("Awesome!")) {
-//                            self.score = self.score + self.pointsForCurrentRound()
-//                            self.target = Int.random(in: 1...100)
-//                            self.round -= 1
-//                            self.sliderValue = 50.00
-//    //                        if round == 0 {
-//    //                            startNewGame()
-//    //                            startNextGame()
-//    //                        }
-//
-//                        })
-//                    }
-//                    Spacer()
-//
-//                }
-//    //            else if gameTwo == true && round == 1 {
-//    //
-//    //            }
-//                if round == 0 {
-//                    Text("Finished!").font(Font.custom("HelveticaNeue-Medium", size: 58))
-//                }
+                if round != 0{
+                    Spacer()
+                    // Target row
+                    HStack {
+                        Text("Put the bullseye as close as you can to:").modifier(LableStyle())
+
+                        Text("\(target)")
+
+                    }
+                    Spacer()
+                    // the gap between bullseye and slider
+                    if invis == false {
+                        Text("this is the slider value \(sliderValue)")
+                    }
+                    Spacer()
+                    // Slider Row
+                    HStack{
+                        Text("1").modifier(LableStyle())
+
+                        Slider(value: $sliderValue, in: 1...100)
+                        Text("100").modifier(LableStyle())
+
+                    }
+                    Spacer()
+                    // button row
+                    Button(action: {
+                        print("buton pressed!, \(score)" )
+                        self.alertIsVisible = true
+
+                    }) {
+                        Text("Hit Me!").modifier(LableStyle())
+
+                    }
+                    .alert(isPresented: $alertIsVisible) { () -> Alert in
+
+                        return Alert (title: Text(alertTitle()), message: Text(
+                            "The slider's value is \(sliderValueRounded()).\n" +
+                            "You scored \(pointsForCurrentRound()) points this round."
+                        ), dismissButton: .default(Text("Awesome!")) {
+                            self.score = self.score + self.pointsForCurrentRound()
+                            self.target = Int.random(in: 1...100)
+                            self.round -= 1
+                            self.sliderValue = 50.00
+    //                        if round == 0 {
+    //                            startNewGame()
+    //                            startNextGame()
+    //                        }
+
+                        })
+                    }
+                    Spacer()
+
+                }
+    //            else if gameTwo == true && round == 1 {
+    //
+    //            }
+                if round == 0 {
+                    Text("Finished!").font(Font.custom("HelveticaNeue-Medium", size: 58))
+                }
             // ~~~~~~~~~~~~~~~~ inside for game two
             
                 
                 
-                ForEach(0 ..< ticTacToeModel.squares.count / 3, content: {
-                    row in
-                    HStack {
-                        ForEach(0 ..< 3, content:{
-                            column in
-                            Color.gray.frame(width: 70, height: 70, alignment: .center)
-                        })
-                    }
-                })
+//                ForEach(0 ..< ticTacToeModel.squares.count / 3, content: {
+//                    row in
+//                    HStack {
+//                        ForEach(0 ..< 3, content:{
+//                            column in
+//                            Color.gray.frame(width: 70, height: 70, alignment: .center)
+//                        })
+//                    }
+//                })
             
             
             // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
