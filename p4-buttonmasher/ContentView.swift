@@ -7,42 +7,61 @@
 
 import SwiftUI
 
-enum SquareStatus {
-    case empty
-    case home
-    case visitor
-}
 
-class Square : ObservableObject {
-    @Published var squareStatus : SquareStatus
-    init(status : SquareStatus){
-        self.squareStatus = status
-    }
-}
-
-class TicTacToeModel: ObservableObject {
-    @Published var squares = [Square]()
-    init() {
-        for _ in 0...8 {
-            squares.append(Square(status: .empty))
+struct Home : View {
+   
+    //Moves
+    @State var moves : [String] = Array(repeating: "", count: 9)
+    // to identify the current player..
+    @State var isPlaying = false
+    var body: some View{
+        VStack {
+            // gridview for playing
+            LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 15), count: 3), spacing: 15){
+                ForEach(0..<9, id: \.self){index in
+                    ZStack {
+                        Color.gray
+                        Text(moves[index])
+                            .font(.system(size:55))
+                            .fontWeight(.heavy)
+                            .foregroundColor(.black)
+                    }
+                    .frame(width: getWidth(), height: getWidth())
+                    .cornerRadius(15)
+                    // whenever tapped adding move
+                    .onTapGesture(perform: {
+                      
+                            moves[index] = isPlaying ? "X" : "O"
+                            // updating player
+                            isPlaying.toggle()
+                        
+                    })
+                    
+                }
+            }
+            .padding(15)
         }
     }
-
+    // calculating width..
+    func getWidth()->CGFloat{
+        // horizontal padding = 30
+        // spacing = 30
+        let width = UIScreen.main.bounds.width - (30 + 30)
+        return width / 3
+    }
 }
-
 
 
 struct ContentView: View {
     
     @State var alertIsVisible = false
-    @State var sliderValue = 50.0
-    @State var target = Int.random(in: 1...100)
+    @State var sliderValue = 5.0
+    @State var target = Int.random(in: 1...10)
     @State var score = 0
-    @State var round = 3
+    @State var round = 2
     @State var invis = true
-    @State var gameOne = true
-    @State var gameTwo = false
-    @StateObject var ticTacToeModel = TicTacToeModel()
+
+    
     
     struct LableStyle: ViewModifier {
         func body(content: Content) -> some View {
@@ -56,80 +75,72 @@ struct ContentView: View {
     
         VStack {
             // ~~~~~~~~~~~~~~~~ inside for game two
-            
+            if round == 1 {
                 
-                Text("TicTacToe?")
-                ForEach(0 ..< ticTacToeModel.squares.count / 3, content: {
-                    row in
+                NavigationView {
+                    Home()
+                        .navigationTitle("Tic Tac Toe")
+
+                }
+            }
+            // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                if round == 2  {
+
+
+
+                    Spacer()
+
+                    // Target row
                     HStack {
-                        ForEach(0 ..< 3, content:{
-                            column in
-                            Color.gray.frame(width: 70, height: 70, alignment: .center)
+                        Text("Put the bullseye as close as you can to:").modifier(LableStyle())
+                        Text("\(target)")
+                    }
+                    Spacer()
+                    // the gap between bullseye and slider
+
+                    // Slider Row
+                    HStack{
+                        Text("1").modifier(LableStyle())
+
+                        Slider(value: $sliderValue, in: 1...10)
+                        Text("10").modifier(LableStyle())
+
+                    }
+                    .padding(.horizontal, 20)
+                    Spacer()
+                    // button row
+                    Button(action: {
+                        print("buton pressed!, \(score)" )
+                        self.alertIsVisible = true
+
+                    }) {
+                        Text("Hit Me!").modifier(LableStyle())
+
+                    }
+                    .alert(isPresented: $alertIsVisible) { () -> Alert in
+
+                        return Alert (title: Text(alertTitle()), message: Text(
+                            "The slider's value is \(sliderValueRounded()).\n" +
+                            "You scored \(pointsForCurrentRound()) points this round."
+                        ), dismissButton: .default(Text("Awesome!")) {
+                            self.score = self.score + self.pointsForCurrentRound()
+                            self.target = Int.random(in: 1...10)
+                            self.round -= 1
+                            self.sliderValue = 5.00
+                           
+
                         })
                     }
-                })
-            
-            
-            // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//                if round != 0{
-//                    Spacer()
-//                    // Target row
-//                    HStack {
-//                        Text("Put the bullseye as close as you can to:").modifier(LableStyle())
-//
-//                        Text("\(target)")
-//
-//                    }
-//                    Spacer()
-//                    // the gap between bullseye and slider
-//                    if invis == false {
-//                        Text("this is the slider value \(sliderValue)")
-//                    }
-//                    Spacer()
-//                    // Slider Row
-//                    HStack{
-//                        Text("1").modifier(LableStyle())
-//
-//                        Slider(value: $sliderValue, in: 1...100)
-//                        Text("100").modifier(LableStyle())
-//
-//                    }
-//                    Spacer()
-//                    // button row
-//                    Button(action: {
-//                        print("buton pressed!, \(score)" )
-//                        self.alertIsVisible = true
-//
-//                    }) {
-//                        Text("Hit Me!").modifier(LableStyle())
-//
-//                    }
-//                    .alert(isPresented: $alertIsVisible) { () -> Alert in
-//
-//                        return Alert (title: Text(alertTitle()), message: Text(
-//                            "The slider's value is \(sliderValueRounded()).\n" +
-//                            "You scored \(pointsForCurrentRound()) points this round."
-//                        ), dismissButton: .default(Text("Awesome!")) {
-//                            self.score = self.score + self.pointsForCurrentRound()
-//                            self.target = Int.random(in: 1...100)
-//                            self.round -= 1
-//                            self.sliderValue = 50.00
-//    //                        if round == 0 {
-//    //                            startNewGame()
-//    //                            startNextGame()
-//    //                        }
-//
-//                        })
-//                    }
-//                    Spacer()
-//
-//                }
-//    //            else if gameTwo == true && round == 1 {
-//    //
-//    //            }
-//                if round == 0 {
-//                    Text("Finished!").font(Font.custom("HelveticaNeue-Medium", size: 58))
-//                }
+                    Spacer()
+
+
+                }
+    //            else if gameTwo == true && round == 1 {
+    //
+    //            }
+                if round == 0 {
+                    Text("Finished!").font(Font.custom("HelveticaNeue-Medium", size: 58))
+                }
 
             // Score row work above here ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
             HStack {
@@ -156,10 +167,10 @@ struct ContentView: View {
 
             }
             .padding(.bottom, 30)
+            .padding(.horizontal, 20)
            
         }
 //        .background(Image("grasstexture3"), alignment: .center)
-        .padding(.horizontal, 20)
   
     }
 
@@ -199,18 +210,13 @@ struct ContentView: View {
     }
     func startNewGame() {
         score = 0
-        round = 3
-        sliderValue = 50.0
-        target = Int.random(in: 1...100)
+        round = 2
+        sliderValue = 5.0
+        target = Int.random(in: 1...10)
         }
        
 
-    func startNextGame() {
-        gameOne = false
-        
-        gameTwo = true
-    
-    }
+
 }
 struct ContentView_Previews:
     PreviewProvider {
