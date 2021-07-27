@@ -16,6 +16,14 @@ struct ContentView: View {
     @State var round = 3
     @State var invis = true
     
+    struct LableStyle: ViewModifier {
+        func body(content: Content) -> some View {
+            return content
+                .foregroundColor(Color.black)
+                .font(Font.custom("HelveticaNeue-Medium", size: 18))
+        }
+    }
+    
     var body: some View {
     
         VStack {
@@ -23,9 +31,10 @@ struct ContentView: View {
             Spacer()
             // Target row
             HStack {
-                Text("Put the bullseye as close as you can to:")
+                Text("Put the bullseye as close as you can to:").modifier(LableStyle())
+   
                 Text("\(target)")
-
+                   
             }
             Spacer()
             if invis == false {
@@ -34,9 +43,11 @@ struct ContentView: View {
             Spacer()
             // Slider Row
             HStack{
-                Text("1")
+                Text("1").modifier(LableStyle())
+       
                 Slider(value: $sliderValue, in: 1...100)
-                Text("100")
+                Text("100").modifier(LableStyle())
+             
             }
             Spacer()
             // button row
@@ -45,7 +56,8 @@ struct ContentView: View {
                 self.alertIsVisible = true
 
             }) {
-                Text("Hit Me!")
+                Text("Hit Me!").modifier(LableStyle())
+                
             }
             .alert(isPresented: $alertIsVisible) { () -> Alert in
 //                let roundedValue = Int(sliderValue.rounded())
@@ -64,6 +76,9 @@ struct ContentView: View {
                 })
             }
             Spacer()
+            
+            
+            
             // Score row
             HStack {
 
@@ -73,6 +88,7 @@ struct ContentView: View {
                     startNewGame()
                 }) {
                     Text("Start Over")
+    
                 }
                 Spacer()
                 Text("Score:")
@@ -88,9 +104,11 @@ struct ContentView: View {
 
             }
             .padding(.bottom, 30)
-            .padding(.horizontal, 20)
+           
         }
+        .background(Image("grasstexture3"), alignment: .center)
         .padding(.horizontal, 20)
+  
     }
 
     func sliderValueRounded() -> Int {
@@ -132,8 +150,9 @@ struct ContentView: View {
         round = 3
         sliderValue = 50.0
         target = Int.random(in: 1...100)
+        }
+       
     }
-}
 
 struct ContentView_Previews:
     PreviewProvider {
