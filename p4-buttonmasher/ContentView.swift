@@ -13,14 +13,18 @@ struct Home : View {
     //Moves
     @State var moves : [String] = Array(repeating: "", count: 9)
     // to identify the current player..
-    @State var isPlaying = false
+    @State var isPlaying = true
+    
     var body: some View{
         VStack {
             // gridview for playing
             LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 15), count: 3), spacing: 15){
                 ForEach(0..<9, id: \.self){index in
                     ZStack {
+                        //Flip animation..
+                        Color.blue
                         Color.gray
+                            .opacity(moves[index] == "" ? 1: 0)
                         Text(moves[index])
                             .font(.system(size:55))
                             .fontWeight(.heavy)
@@ -30,10 +34,13 @@ struct Home : View {
                     .cornerRadius(15)
                     // whenever tapped adding move
                     .onTapGesture(perform: {
-                      
+                    
+                        if moves[index] == ""{
                             moves[index] = isPlaying ? "X" : "O"
                             // updating player
                             isPlaying.toggle()
+                        }
+//
                         
                     })
                     
@@ -49,6 +56,11 @@ struct Home : View {
         let width = UIScreen.main.bounds.width - (30 + 30)
         return width / 3
     }
+    
+    // checking for winner 5:39min
+    
+    
+    
 }
 
 
@@ -182,13 +194,13 @@ struct ContentView: View {
         abs(target - sliderValueRounded())
     }
     func pointsForCurrentRound() -> Int {
-        let maximumScore = 100
+        let maximumScore = 10
         let difference = amountOff()
         let bonus: Int
         if difference == 0 {
-            bonus = 100
+            bonus = 20
         } else if difference == 1 {
-            bonus = 50
+            bonus = 6
         } else {
             bonus = 0
         }
@@ -199,9 +211,9 @@ struct ContentView: View {
         let title: String
         if difference == 0 {
             title = "Perfect!"
-        } else if difference < 5 {
+        } else if difference < 1 {
             title = "almost!"
-        } else if difference <= 10 {
+        } else if difference <= 2 {
             title = "not bad"
         } else {
             title = "Not even close"
