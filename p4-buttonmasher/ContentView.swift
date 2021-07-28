@@ -50,7 +50,19 @@ struct Home : View {
             }
             .padding(15)
         }
-        
+        // whenver moves updated, it will check for winner
+        .onChange(of: moves, perform: { value in
+            checkWinner()
+        })
+        .alert(isPresented: $gameOver, content: {
+            Alert(title: Text("Winner"), message: Text(msg), dismissButton:
+                    .destructive(Text("Play Again"), action:{
+                        // resetting all data
+                        moves.removeAll()
+                        moves = Array(repeating:"", count: 9)
+                        
+                    }))
+        })
     }
     // calculating width..
     func getWidth()->CGFloat{
@@ -75,10 +87,29 @@ struct Home : View {
     }
     func checkMoves(player: String)-> Bool{
         // horizontal moves..
-        for i in stride(from: 0, through: 9, by: 3){
-            if moves[i] == player && moves[i+1] == player && moves[i+2] == player{
+        for i in stride(from: 0, to: 9, by: 3){
+            
+            
+            if moves[i] == player && moves[i + 1] == player && moves[i + 2] == player {
+                
                 return true
             }
+        }
+        // vertical moves..
+        for i in 0...2{
+            if moves[i] == player && moves[i + 3] == player && moves[i + 6] == player {
+                
+                return true
+            }
+        }
+        // checking diagonals
+        if moves[0] == player && moves[4] == player && moves[8] == player {
+            
+            return true
+        }
+        if moves[2] == player && moves[4] == player && moves[6] == player {
+            
+            return true
         }
         return false
     }
