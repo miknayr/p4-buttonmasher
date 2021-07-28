@@ -14,6 +14,8 @@ struct Home : View {
     @State var moves : [String] = Array(repeating: "", count: 9)
     // to identify the current player..
     @State var isPlaying = true
+    @State var gameOver = false
+    @State var msg = ""
     
     var body: some View{
         VStack {
@@ -48,6 +50,7 @@ struct Home : View {
             }
             .padding(15)
         }
+        
     }
     // calculating width..
     func getWidth()->CGFloat{
@@ -58,7 +61,27 @@ struct Home : View {
     }
     
     // checking for winner 5:39min
-    
+    func checkWinner() {
+        if checkMoves(player: "X") {
+            // promoting alert view..
+            msg = "Player X won"
+            gameOver.toggle()
+            
+        }
+        if checkMoves(player: "O"){
+            msg = "Player O won"
+            gameOver.toggle()
+        }
+    }
+    func checkMoves(player: String)-> Bool{
+        // horizontal moves..
+        for i in stride(from: 0, through: 9, by: 3){
+            if moves[i] == player && moves[i+1] == player && moves[i+2] == player{
+                return true
+            }
+        }
+        return false
+    }
     
     
 }
