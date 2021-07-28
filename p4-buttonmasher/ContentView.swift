@@ -20,7 +20,7 @@ struct ContentView: View {
     @State var isPlaying = true
     @State var gameOver = false
     @State var msg = ""
-    @State var timeRemaining = 10 // < something wrong with this on build run???
+    @State var timeRemaining = 10
     
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
@@ -63,6 +63,7 @@ struct ContentView: View {
                             }
                         }
                     }
+                
                                               
                         // gridview for playing
                     LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 15), count: 3), spacing: 15){
