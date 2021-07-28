@@ -80,8 +80,18 @@ struct Home : View {
             gameOver.toggle()
             
         }
-        if checkMoves(player: "O"){
+       else if checkMoves(player: "O"){
             msg = "Player O won"
+            gameOver.toggle()
+        }
+       else {
+            // checking no moves
+        let status = moves.contains { (value) -> Bool in
+            
+            return value == ""
+        }
+        if !status {
+            msg = "Game Over"
             gameOver.toggle()
         }
     }
@@ -124,7 +134,7 @@ struct ContentView: View {
     @State var sliderValue = 5.0
     @State var target = Int.random(in: 1...10)
     @State var score = 0
-    @State var round = 2
+    @State var round = 1
     @State var invis = true
 
     
