@@ -2,10 +2,10 @@
 how fast can you click?
 
 ## Images of Button Masher
-![gameOne](images/game1.png)
-![gameTwo](images/game2.png)
-![end](images/end.png)
-![info](images/info.png)
+![gameOne](images/game1.png){ width: 200px; }
+![gameTwo](images/game2.png){ width: 200px; }
+![end](images/end.png){ width: 200px; }
+![info](images/info.png){ width: 200px; }
 
 ## Tech used
 Swift and SwiftUI
