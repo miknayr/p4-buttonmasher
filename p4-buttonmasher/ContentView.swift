@@ -7,141 +7,20 @@
 
 import SwiftUI
 
-//
-//struct Home : View {
-//
-////    //Moves
-////    @State var moves : [String] = Array(repeating: "", count: 9)
-////    // to identify the current player..
-////    @State var isPlaying = true
-////    @State var gameOver = false
-////    @State var msg = ""
-//
-//    var body: some View{
-//        VStack {
-//            // gridview for playing
-//            LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 15), count: 3), spacing: 15){
-//                ForEach(0..<9, id: \.self){index in
-//                    ZStack {
-//                        //Flip animation..
-//                        Color.blue
-//                        Color.gray
-//                            .opacity(moves[index] == "" ? 1: 0)
-//                        Text(moves[index])
-//                            .font(.system(size:55))
-//                            .fontWeight(.heavy)
-//                            .foregroundColor(.black)
-//                    }
-//                    .frame(width: getWidth(), height: getWidth())
-//                    .cornerRadius(15)
-//                    // whenever tapped adding move
-//                    .onTapGesture(perform: {
-//
-//                        if moves[index] == ""{
-//                            moves[index] = isPlaying ? "X" : "O"
-//                            // updating player
-//                            isPlaying.toggle()
-//                        }
-////
-//
-//                    })
-//
-//                }
-//            }
-//            .padding(15)
-//        }
-//        // whenver moves updated, it will check for winner
-//        .onChange(of: moves, perform: { value in
-//            checkWinner()
-//        })
-//        .alert(isPresented: $gameOver, content: {
-//            Alert(title: Text("Winner"), message: Text(msg), dismissButton:
-//                    .destructive(Text("Play Again"), action:{
-//                        // resetting all data
-//                        moves.removeAll()
-//                        moves = Array(repeating:"", count: 9)
-//                        self.round -= 1
-//                    }))
-//        })
-//    }
-//    // calculating width..
-////    func getWidth()->CGFloat{
-////        // horizontal padding = 30
-////        // spacing = 30
-////        let width = UIScreen.main.bounds.width - (30 + 30)
-////        return width / 3
-////    }
-////
-////    // checking for winner 5:39min
-////    func checkWinner() {
-////        if checkMoves(player: "X") {
-////            // promoting alert view..
-////            msg = "Player X won"
-////            gameOver.toggle()
-////
-////        }
-////       else if checkMoves(player: "O"){
-////            msg = "Player O won"
-////            gameOver.toggle()
-////        }
-////       else {
-////            // checking no moves
-////            let status = moves.contains { (value) -> Bool in
-////                return value == ""
-////            }
-////            if !status {
-////                msg = "Game Over"
-////                gameOver.toggle()
-////            }
-////       }
-////    }
-////    func checkMoves(player: String)-> Bool{
-////        // horizontal moves..
-////        for i in stride(from: 0, to: 9, by: 3){
-////
-////
-////            if moves[i] == player && moves[i + 1] == player && moves[i + 2] == player {
-////
-////                return true
-////            }
-////        }
-////        // vertical moves..
-////        for i in 0...2{
-////            if moves[i] == player && moves[i + 3] == player && moves[i + 6] == player {
-////
-////                return true
-////            }
-////        }
-////        // checking diagonals
-////        if moves[0] == player && moves[4] == player && moves[8] == player {
-////
-////            return true
-////        }
-////        if moves[2] == player && moves[4] == player && moves[6] == player {
-////
-////            return true
-////        }
-////        return false
-////    }
-////
-//
-//}
-
-
 struct ContentView: View {
     
     @State var alertIsVisible = false
     @State var sliderValue = 5.0
     @State var target = Int.random(in: 1...10)
     @State var score = 0
-    @State var round = 2
+    @State var round = 1
     @State var invis = true
     @State var moves : [String] = Array(repeating: "", count: 9)
     // to identify the current player..
     @State var isPlaying = true
     @State var gameOver = false
     @State var msg = ""
-    
+   
     
     struct LableStyle: ViewModifier {
         func body(content: Content) -> some View {
@@ -158,6 +37,17 @@ struct ContentView: View {
                 if round == 1 {
                     
                     VStack {
+                        HStack{
+                            VStack {
+                                
+                                Text("The countdown:")
+                                
+                            }
+                            
+                        }
+                       
+                        
+                       
                         // gridview for playing
                         LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 15), count: 3), spacing: 15){
                             ForEach(0..<9, id: \.self){index in
@@ -206,8 +96,6 @@ struct ContentView: View {
                 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                 if round == 2 {
 
-
-
                     Spacer()
 
                     // Target row
@@ -255,9 +143,7 @@ struct ContentView: View {
 
 
                 }
-    //            else if gameTwo == true && round == 1 {
-    //
-    //            }
+   
                 if round == 0 {
                     Text("Finished!").font(Font.custom("HelveticaNeue-Medium", size: 58))
                 }
@@ -393,8 +279,7 @@ struct ContentView: View {
         }
         return false
     }
-
-
+ 
 }
 struct ContentView_Previews:
     PreviewProvider {
