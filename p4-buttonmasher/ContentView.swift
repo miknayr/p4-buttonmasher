@@ -20,13 +20,11 @@ struct ContentView: View {
     @State var isPlaying = true
     @State var gameOver = false
     @State var msg = ""
-    @State var timeRemaining = 10
+    @State var timeRemaining = 10 // < something wrong with this on build run???
     
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
  
-    
-    
     struct LableStyle: ViewModifier {
         func body(content: Content) -> some View {
             return content
@@ -45,56 +43,54 @@ struct ContentView: View {
     var body: some View {
         
         VStack {
-            
-        
-                // ~~~~~~~~~~~~~~~~ inside for game two
+              // ~~~~~~~~~~~~~~~~ inside for game two
                 if round == 1 {
                     
-                    VStack {
-                        HStack{
-                            VStack {
+            VStack {
+                    HStack{
+                        VStack {
 
-                                Text("The countdown:").modifier(CountdownStyle())
-                                Text("\(timeRemaining)")
-                                   .onReceive(timer) { _ in
-                                       if timeRemaining > 0 {
-                                            timeRemaining -= 1
-                                    }
-                                       else if timeRemaining == 0 && round == 1 {
-                                            round -= 1
-                                       }
-
+                            Text("The countdown:").modifier(CountdownStyle())
+                            Text("\(timeRemaining)")
+                               .onReceive(timer) { _ in
+                                   if timeRemaining > 0 {
+                                        timeRemaining -= 1
                                 }
+                                   else if timeRemaining == 0 && round == 1 {
+                                        round -= 1
+                                   }
+
                             }
                         }
+                    }
                                               
                         // gridview for playing
-            LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 15), count: 3), spacing: 15){
-                    ForEach(0..<9, id: \.self){index in
-                    ZStack {
-                                //Flip animation..
-                                Color.blue
-                                Color.gray
-                                    .opacity(moves[index] == "" ? 1: 0)
-                                Text(moves[index])
-                                    .font(.system(size:55))
-                                    .fontWeight(.heavy)
-                                    .foregroundColor(.black)
-                    }
-                                .frame(width: getWidth(), height: getWidth())
-                                .cornerRadius(15)
-                                // whenever tapped adding move
-                                .onTapGesture(perform: {
-                                
+                    LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 15), count: 3), spacing: 15){
+                        ForEach(0..<9, id: \.self){index in
+                                ZStack {
+                                    //Flip animation..
+                                    Color.blue
+                                    Color.gray
+                                        .opacity(moves[index] == "" ? 1: 0)
+                                    Text(moves[index])
+                                        .font(.system(size:55))
+                                        .fontWeight(.heavy)
+                                        .foregroundColor(.black)
+                                }
+                                    .frame(width: getWidth(), height: getWidth())
+                                    .cornerRadius(15)
+                                    // whenever tapped adding move
+                                    .onTapGesture(perform: {
+                                    
                                     if moves[index] == ""{
                                         moves[index] = isPlaying ? "X" : "O"
                                         // updating player
                                         isPlaying.toggle()
                                     }
                                 })
-                                
-                            }
+                                    
                         }
+                    }
                         .padding(15)
                     }
                     // whenver moves updated, it will check for winner
@@ -115,25 +111,13 @@ struct ContentView: View {
                                     
                                 }))
                     })
-//                    .alert(isPresented: $alertIsVisible) { () -> Alert in
-//
-//                        return Alert (title: Text(alertTitle()), message: Text(
-//                            msg + "You scored \(pointsForCurrentRoundTTT()) points this round."
-//                        ), dismissButton: .default(Text("Awesome!")) {
-//                            self.score = self.score + self.pointsForCurrentRoundTTT()
-//
-//
-//
-//
-//                        })
-//                    }
-                    
+   
                 }
+            
                 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+            
                 if round == 2 {
-
                     Spacer()
-
                     // Target row
                     VStack{
                         Text("The countdown:").modifier(CountdownStyle())
@@ -145,13 +129,10 @@ struct ContentView: View {
                                else if timeRemaining == 0 {
                                     round -= 1
                                     timeRemaining = 10
-                                    
                                }
-                          
                         }
                     }
                     Spacer()
-                    
                     HStack {
                         Text("Put the bullseye as close as you can to:").modifier(LableStyle())
                         Text("\(target)")
@@ -160,7 +141,7 @@ struct ContentView: View {
                     // the gap between bullseye and slider
 
                     // Slider Row
-                    HStack{
+                    HStack {
                         Text("1").modifier(LableStyle())
 
                         Slider(value: $sliderValue, in: 1...10)
@@ -177,8 +158,6 @@ struct ContentView: View {
                         self.target = Int.random(in: 1...10)
                         self.round -= 1
                         self.sliderValue = 5.00
-                       
-                        
                     }) {
                         Text("       ").modifier(LableStyle())
                             .background(Image("button").scaleEffect(0.3))
