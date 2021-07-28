@@ -379,7 +379,6 @@ struct ContentView: View {
         }
         return false
     }
- 
 
 }
 struct ContentView_Previews:
